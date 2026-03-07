@@ -1,0 +1,14 @@
+{
+  "configurations": [    
+    {
+      "type": "java",
+      "name": "Spring Boot-SpringAiDemoApplication<SpringAiDemo>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.ai.SpringAiDemo.SpringAiDemoApplication",
+      "projectName": "SpringAiDemo",
+      "args": "",
+      "envFile": "SpringAiDemo/.env",
+    }
+  ]
+}

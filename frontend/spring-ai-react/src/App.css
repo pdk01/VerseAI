@@ -1,0 +1,259 @@
+.App {
+text-align: center;
+max-width: 1200px;
+margin: 0 auto;
+padding: 24px;
+}
+
+/* Remove old tab-specific styles if using single-page */
+.tabs, .tab-content { display: contents; }
+
+/* Generic card */
+.card {
+background: rgba(255,255,255,0.7);
+border-radius: var(--radius-lg);
+border: 1px solid rgba(255,255,255,0.6);
+padding: 24px;
+box-shadow: var(--shadow-2);
+}
+@media (prefers-color-scheme: dark) {
+.card {
+background: rgba(17,17,23,0.35);
+border: 1px solid rgba(255,255,255,0.06);
+box-shadow: var(--shadow-1);
+}
+}
+
+/* Inputs/buttons enhancement (for extra polish around MUI) */
+input, textarea, .MuiOutlinedInput-root {
+border-radius: var(--radius-md) !important;
+}
+.MuiButton-root {
+border-radius: 12px !important;
+text-transform: none !important;
+font-weight: 600 !important;
+}
+
+/* Image masonry (results grid) */
+.masonry-grid {
+display: flex;
+margin-left: -16px;
+width: auto;
+}
+.masonry-grid_column {
+padding-left: 16px;
+background-clip: padding-box;
+}
+.masonry-grid_column > div {
+margin-bottom: 16px;
+}
+
+/* Image overlay actions + marquee tile sizing */
+.image-tile {
+position: relative;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: var(--shadow-1);
+/* These two dimensions are for marquee tiles; masonry items define their own height via the image. */
+width: 280px;
+height: 160px;
+}
+.image-tile img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+}
+.image-actions {
+position: absolute;
+inset: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 12px;
+background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.55));
+opacity: 0;
+transition: opacity .25s ease;
+}
+.image-tile:hover .image-actions { opacity: 1; }
+
+/* Skeleton loader */
+.skeleton-card {
+border-radius: 12px;
+height: 220px;
+background: linear-gradient(90deg, #e9e9ee 25%, #f4f4f8 37%, #e9e9ee 63%);
+background-size: 400% 100%;
+animation: shine 1.1s ease-in-out infinite;
+}
+@keyframes shine {
+0% { background-position: 100% 0; }
+100% { background-position: 0 0; }
+}
+@media (prefers-color-scheme: dark) {
+.skeleton-card {
+background: linear-gradient(90deg, #2a2a2f 25%, #33333a 37%, #2a2a2f 63%);
+}
+}
+
+/* Chat bubbles */
+.chat-container {
+max-height: 60vh;
+overflow-y: auto;
+padding: 12px;
+border-radius: var(--radius-lg);
+border: 1px solid rgba(255,255,255,0.5);
+background: rgba(255,255,255,0.5);
+}
+@media (prefers-color-scheme: dark) {
+.chat-container {
+background: rgba(17,17,23,0.35);
+border-color: rgba(255,255,255,0.06);
+}
+}
+.bubble {
+display: inline-block;
+padding: 10px 14px;
+border-radius: 16px;
+margin: 6px 0;
+max-width: 80%;
+word-wrap: break-word;
+text-align: left;
+box-shadow: var(--shadow-1);
+}
+.bubble-user {
+background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+color: white;
+margin-left: auto;
+border-bottom-right-radius: 4px;
+}
+.bubble-ai {
+background: rgba(255,255,255,0.8);
+color: #111827;
+border-bottom-left-radius: 4px;
+}
+@media (prefers-color-scheme: dark) {
+.bubble-ai {
+background: rgba(255,255,255,0.06);
+color: #e5e7eb;
+}
+}
+
+/* Recipe two-panel preview */
+.recipe-grid {
+display: grid;
+grid-template-columns: 1fr;
+gap: 24px;
+}
+@media (min-width: 900px) {
+.recipe-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Utility spacing */
+.mt-2 { margin-top: 8px; }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+.mt-6 { margin-top: 24px; }
+.mt-8 { margin-top: 32px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-3 { margin-bottom: 12px; }
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.mb-8 { margin-bottom: 32px; }
+
+/* Section base transition */
+.section .section-inner {
+transform: translateY(8px);
+opacity: 0.98;
+transition: transform .6s ease, opacity .6s ease;
+}
+
+/* Ensure sections sit above background visuals (hero blobs, marquee track) */
+.section { position: relative; z-index: 1; }
+.section .section-inner { position: relative; z-index: 2; }
+.hero { position: relative; z-index: 0; }
+.blob { z-index: 0; }
+/* Optional: ensure Paper inside sections sits above everything */
+.MuiPaper-root { position: relative; z-index: 3; }
+
+/* ——— Marquee: single horizontal line, NO WRAP, reserves space ——— */
+.marquee-root {
+position: relative;
+width: 100%;
+overflow: hidden;
+height: 160px; /* match <Marquee height={160} /> */
+margin-bottom: 24px; /* space after marquee */
+z-index: 0; /* behind section content */
+}
+
+.marquee-track {
+position: absolute;
+inset: 0;
+will-change: transform;
+z-index: 0;
+}
+
+/* One unbroken horizontal row */
+.marquee-row {
+display: inline-flex;
+align-items: center;
+white-space: nowrap; /* prevents wrapping */
+gap: var(--gap, 24px);
+transform: translateZ(0);
+animation: marquee-move var(--duration, 30s) linear infinite;
+}
+
+/* Each child stays in the same line */
+.marquee-item {
+display: inline-block;
+flex: 0 0 auto; /* no shrink/grow */
+}
+
+/* Pause animation on hover (optional) */
+.marquee-pausable:hover .marquee-row { animation-play-state: paused; }
+
+@keyframes marquee-move {
+0% { transform: translate3d(0, 0, 0) rotateX(0.001deg); }
+100% { transform: translate3d(-50%, 0, 0) rotateX(0.001deg); }
+}
+
+/* Edge masks for modern look */
+.marquee-mask {
+position: absolute;
+top: 0; bottom: 0;
+width: 72px;
+z-index: 1;
+pointer-events: none;
+}
+.marquee-mask.left {
+left: 0;
+background: linear-gradient(90deg, rgba(255,255,255,0.85), rgba(255,255,255,0));
+}
+.marquee-mask.right {
+right: 0;
+background: linear-gradient(270deg, rgba(255,255,255,0.85), rgba(255,255,255,0));
+}
+@media (prefers-color-scheme: dark) {
+.marquee-mask.left {
+background: linear-gradient(90deg, rgba(15,15,18,0.85), rgba(15,15,18,0));
+}
+.marquee-mask.right {
+background: linear-gradient(270deg, rgba(15,15,18,0.85), rgba(15,15,18,0));
+}
+}
+
+/* Optional: image overlay tint for cohesion */
+.image-tile::after {
+content: '';
+position: absolute;
+inset: 0;
+background: linear-gradient(180deg, rgba(0,0,0,0.00), rgba(0,0,0,0.20));
+opacity: 0;
+transition: opacity .25s ease;
+}
+.image-tile:hover::after { opacity: 1; }
+
+/* Optional mobile tuning */
+@media (max-width: 480px) {
+.marquee-root { height: 130px; }
+.image-tile { width: 220px; height: 130px; }
+}
