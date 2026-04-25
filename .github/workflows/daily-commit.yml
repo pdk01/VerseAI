@@ -1,0 +1,20 @@
+name: Daily Commit
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Daily log update
+        run: |
+          git config user.name "pdk01"
+          git config user.email "pranavkaushik001@gmail.com"
+          echo "$(date +'%Y-%m-%d %H:%M:%S UTC')" >> activity.log
+          git add activity.log
+          git commit -m "chore: daily activity log $(date +'%Y-%m-%d')"
+          git push
